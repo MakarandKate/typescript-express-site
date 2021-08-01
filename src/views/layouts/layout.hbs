@@ -1,0 +1,66 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="{{description}}">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+    {{!-- <link rel="shortcut icon" href="img/icons/logo.png" type="image/x-icon"> --}}
+    <title>{{title}}</title>
+
+    <link rel="stylesheet" data-href="/css/bootstrap.css">
+
+    <script type="text/javascript">
+        {{#if isDev}}
+            let __ENVIRONMENT="dev"; 
+        {{else}}
+            let __ENVIRONMENT="prod"; 
+        {{/if}}
+        var __fnArr=[];
+        function onLoad(f){
+            (typeof f === "function") ? __fnArr.push(f) : '';
+        }
+    </script>
+
+    
+
+  </head>
+  <body>
+      
+    <div id="preloader">
+        
+    </div>
+
+    <div class="body_wrapper">
+        {{>header}}
+        
+        {{{body}}}
+        
+        {{>footer}}
+        {{>loginmodal}}
+    </div>
+    
+    
+    <p style="font-size:10px;text-align:center;color:#777;">Version : {{>version}}</p>
+    
+    <script data-src="/js/package.js"></script>
+    <script type="text/javascript">
+        (function(){
+            window.onload = function(e){
+                var jss=document.querySelectorAll("[data-src]");
+                var css=document.querySelectorAll("[data-href]");
+                for(let i=0;i<css.length;i++){
+                    css[i].setAttribute("href",css[i].getAttribute("data-href"))
+                }
+                for(let i=0;i<jss.length;i++){
+                    jss[i].setAttribute("src",jss[i].getAttribute("data-src"))
+                }
+            }
+        })();
+    </script> 
+    {{#if isDev}}
+        <script src="/reload/reload.js"></script>
+    {{/if}}
+  </body>
+</html>
