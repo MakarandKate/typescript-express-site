@@ -42,31 +42,48 @@ app.use(express.urlencoded());
 const MySQLStore   = expressMySqlSession(expressSession);
 
 
-const mysqlstoreOptions:any=Config.connectionConfigs.logs;
+const mysqlstoreOptions:any=Config.connectionConfigs.primary;
 mysqlstoreOptions.schema={
     tableName: 'z_session'
 };
 
 
-//const sessionStore = new MySQLStore(mysqlstoreOptions);
+const sessionStore = new MySQLStore(mysqlstoreOptions);
 
-// app.use(session({
-//     secret: Config.sessionSecret,
-//     saveUninitialized:true,
-//     resave:false,
-//     cookie:{
-//         maxAge:(86400000)
-//     },
-//     store:sessionStore,
-// }));
+app.use(session({
+    secret: Config.sessionSecret,
+    saveUninitialized:true,
+    resave:false,
+    cookie:{
+        maxAge:(86400000)
+    },
+    store:sessionStore,
+}));
 
+
+
+const http = require('http');
+
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+let socketUsers:any={};
+
+io.on('connection', (socket:any) => {
+    Jot.debug("new connection : ",socket.id);
+    socketUsers[socket.id]=socket;
+    socket.on('disconnect', () => {
+        delete socketUsers[socket.id];
+    });
+});
 
 if(Config.Env===Env.dev){
     const reload = require('reload');
     const watch = require('watch');
     reload(app).then((reloadReturned:any) =>{
         // Jot.info(`reloadReturned1:`,reloadReturned);
-        app.listen( Config.port, () => {
+        server.listen( Config.port, () => {
             Jot.info(`info:Server started at ${Config.port}`);
         })
 
@@ -78,7 +95,7 @@ if(Config.Env===Env.dev){
         Jot.error('Reload could not start, could not start server/sample app', err)
     });
 }else{
-    app.listen( Config.port, () => {
+    server.listen( Config.port, () => {
         Jot.info(`info:Server started at ${Config.port}`);
     })
 }

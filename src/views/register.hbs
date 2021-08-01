@@ -1,0 +1,50 @@
+<div class="container">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h5>OneVerify</h5>
+                    <canvas id="qrcode-reg"></canvas>
+                </div>
+                <div class="col-6">
+                  <h3>Register</h3>
+                    <form action="/register" method="POST">
+                    
+                    <div class="form-floating mb-3">
+                        <input 
+                            type="text" 
+                            name="name"
+                            class="form-control" 
+                            id="inp-reg-name" 
+                            placeholder="name">
+                        <label for="inp-reg-name">Name</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input 
+                            type="text" 
+                            name="username"
+                            class="form-control" 
+                            id="inp-reg-username" 
+                            placeholder="username">
+                        <label for="inp-reg-username">Username</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input 
+                            type="password"
+                            name="password" 
+                            class="form-control" 
+                            id="inp-reg-password" 
+                            placeholder="password">
+                        <label for="inp-reg-password">Password</label>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-primary" type="submit">Register</button>
+                    </div>
+                    </form>
+                    <a href="#" class="nav-link m-2 menu-item nav-active" data-bs-toggle="modal" data-bs-target="#exampleModal">Already have an account? Login</a>
+                </div>
+            </div>
+        </div>
+</div>
+
+{{>loginmodal}}

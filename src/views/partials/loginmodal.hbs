@@ -9,21 +9,35 @@
         <div class="container">
             <div class="row">
                 <div class="col-6">
-                    <h3>OneVerify</h3>
+                    <h5>OneVerify</h5>
+                    <canvas id="qrcode"></canvas>
                 </div>
                 <div class="col-6">
+                    <form action="/login" method="POST">
+                    
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Username</label>
+                        <input 
+                            type="text" 
+                            name="username"
+                            class="form-control" 
+                            id="inp-username" 
+                            placeholder="username">
+                        <label for="inp-username">Username</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Password</label>
+                        <input 
+                            type="password"
+                            name="password" 
+                            class="form-control" 
+                            id="inp-password" 
+                            placeholder="password">
+                        <label for="inp-password">Password</label>
                     </div>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button class="btn btn-primary" type="button">Login</button>
+                        <button class="btn btn-primary" type="submit">Login</button>
                     </div>
-                    <a href="">Dont Have Account? Register.</a>
+                    </form>
+                    <a href="/register">Don't Have Account? Register.</a>
                 </div>
             </div>
         </div>
@@ -33,3 +47,31 @@
     </div>
   </div>
 </div>
+
+<script>
+    onLoad((_w,_c)=>{
+        var socket = io();
+
+        socket.on('connect',(_s)=>{
+            let qrOptions={
+                element: document.getElementById("qrcode"),
+                background: '#ffffff',
+                backgroundAlpha: 1,
+                foreground: '#2c3e50',
+                foregroundAlpha: 1,
+                level: 'H',
+                padding: 0,
+                size: 256,
+                value: `https://oneverify.page.link/?link=${window.location.origin}?sid=${socket.id}&apn=co.in.oneverify`
+            }
+            var qrcode = new QRious(qrOptions);
+            let regEl=document.getElementById("qrcode-reg");
+            if(regEl){
+                qrOptions.element=document.getElementById("qrcode-reg");
+                new QRious(qrOptions);
+            }
+        })
+
+        
+    })
+</script>

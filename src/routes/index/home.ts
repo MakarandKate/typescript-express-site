@@ -3,16 +3,16 @@ import { Request,Response } from 'express';
 import { setPage } from '../../app/Page';
 
 
-const indexRouter=async (req:Request,res:Response)=>{
-    if(req.session.uid){
-        res.redirect('/home');
+const homeRouter=async (req:Request,res:Response)=>{
+    if(!req.session.uid){
+        res.redirect('/');
     }
     setPage(req,res,{
         title:"AwesomeSite",
         description: '',
-        view:"index"
+        view:"home"
     })
 }
 
 
-export {indexRouter};
+export {homeRouter};
