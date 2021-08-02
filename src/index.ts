@@ -7,13 +7,19 @@ import {Jot} from '@makarandkate/amlogger';
 import session from "express-session";
 import * as expressSession from "express-session";
 import expressMySqlSession from "express-mysql-session";
-
+var cors = require('cors')
 
 
 
 
 
 const app = express();
+
+var corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors(corsOptions))
 
 import {initDb} from './app/Db';
 
@@ -66,7 +72,12 @@ const http = require('http');
 
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server);
+const io = new Server(server,{
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    }
+});
 
 let socketUsers:any={};
 
