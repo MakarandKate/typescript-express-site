@@ -10,7 +10,11 @@
     <div class="navbar-collapse flex-grow-1 text-right" id="myNavbar">
         <ul class="navbar-nav ms-auto flex-nowrap">
             <li class="nav-item">
-                <a href="#" class="nav-link m-2 menu-item nav-active" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</a>
+                {{#if isLoggedIn}}
+                    <a href="/logout" class="nav-link m-2 menu-item nav-active" >Logout</a>
+                {{else}}
+                    <a href="#" class="nav-link m-2 menu-item nav-active" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</a>
+                {{/if}}
             </li>
         </ul>
     </div>

@@ -1,5 +1,31 @@
 <div class="container">
-<h1>Welcome</h1>    
+  <h1 class="text-center">Welcome {{data.user.name}}</h1>    
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Field</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>username</td>
+        <td>{{data.user.username}}</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Name</td>
+        <td>{{data.user.name}}</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Registered at</td>
+        <td>{{data.user.created_stamp}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 

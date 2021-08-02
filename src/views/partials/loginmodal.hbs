@@ -10,7 +10,14 @@
             <div class="row">
                 <div class="col-6">
                     <h5>OneVerify</h5>
-                    <canvas id="qrcode"></canvas>
+                    <p id="_ovi-url"></p>
+                    <canvas class="d-none d-md-block" id="qrcode"></canvas>
+                    <hr/>
+                    <button class="d-md-none btn btn-success btn-oneverify">OneVerify</button>
+                    <form id="_ovi_form" action="_ovi/login" method="POST">
+                        <input type="hidden" name="kyc" id="_ovi-inp-kyc"/>
+                        <button id="_ovi-btn-submit" type="submit" class="d-none"></button>
+                    </form>
                 </div>
                 <div class="col-6">
                     <form action="/login" method="POST">
@@ -62,7 +69,7 @@
                 level: 'H',
                 padding: 0,
                 size: 256,
-                value: `https://oneverify.page.link/?link=${window.location.origin}?sid=${socket.id}&apn=co.in.oneverify`
+                value: `https://oneverify.page.link/?link=${window.location.origin}/_ovi/${socket.id}&apn=co.in.oneverify`
             }
             var qrcode = new QRious(qrOptions);
             let regEl=document.getElementById("qrcode-reg");
@@ -70,7 +77,23 @@
                 qrOptions.element=document.getElementById("qrcode-reg");
                 new QRious(qrOptions);
             }
+            $(".btn-oneverify").on('click',()=>{
+                window.open(`https://oneverify.page.link/?link=${window.location.origin}/_ovi/${socket.id}&apn=co.in.oneverify`)
+            });
+            $("#_ovi-url").html(`${window.location.origin}/_ovi/${socket.id}`);
         })
+
+        //setTimeout(()=>{
+        //    socket.emit("_ovi_login", {
+        //        to:socket.id,
+        //        kyc:'{"email":"makrand@gmail.com","firstName":"Makarand","lastName":"Kate"}'
+        //    });
+        //},5000);
+
+        socket.on('_ovi_login',(args)=>{
+            $('#_ovi-inp-kyc').val(args);
+            $("#_ovi-btn-submit").click();
+        });
 
         
     })

@@ -6,6 +6,15 @@ import {indexRouter} from './index';
 router.get('/',indexRouter);
 
 
+import {oviRouter,ovLoginRouter} from './_ovi';
+router.get('/_ovi/:sid',oviRouter);
+router.post('/_ovi/login',ovLoginRouter);
+
+
+import {logoutRouter} from './logout';
+router.get('/logout',logoutRouter);
+
+
 import {homeRouter} from './home';
 router.get('/home',homeRouter);
 

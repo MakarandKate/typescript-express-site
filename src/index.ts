@@ -71,12 +71,19 @@ const io = new Server(server);
 let socketUsers:any={};
 
 io.on('connection', (socket:any) => {
-    Jot.debug("new connection : ",socket.id);
+    //Jot.debug("new connection : ",socket.id);
+    
     socketUsers[socket.id]=socket;
+
+    socket.on('_ovi_login',(arg:any)=>{
+        io.to(arg.to).emit('_ovi_login',arg.kyc);
+    })
+
     socket.on('disconnect', () => {
         delete socketUsers[socket.id];
     });
 });
+
 
 if(Config.Env===Env.dev){
     const reload = require('reload');
